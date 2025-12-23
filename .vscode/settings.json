@@ -1,0 +1,7 @@
+{
+    // Disable inline (inline completions) suggestions in this workspace.
+    // This prevents Copilot (and other inline providers) from inserting
+    // multi-line completions automatically, while keeping the suggestion
+    // widget (single-item suggestions) available via Ctrl+Space or typing.
+    "editor.inlineSuggest.enabled": false
+}
