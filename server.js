@@ -37,10 +37,10 @@ db.connect(err => {
 
 
 app.post('/add-receipt', (req, res) => {
-    const { username, score } = req.body;
+    const { description, cost, category, location, date } = req.body;
     const sql = 'INSERT INTO RECEIPTENTRY (DESCRIPTION, COST, CATEGORY, LOCATION, RECEIPT_DATE) VALUES (?, ?, ?, ?, ?)';
 
-    db.query(sql, [username, score], (err, result) => {
+    db.query(sql, [description, cost, category, location, date], (err, result) => {
         if (err) {
             console.error('DATABASE ERROR:', err);
             return res.status(500).send(err);
