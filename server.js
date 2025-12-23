@@ -36,7 +36,7 @@ db.connect(err => {
 });
 
 
-app.post('/add-data', (req, res) => {
+app.post('/add-receipt', (req, res) => {
     const { username, score } = req.body;
     const sql = 'INSERT INTO RECEIPTENTRY (DESCRIPTION, COST, CATEGORY, LOCATION, RECEIPT_DATE) VALUES (?, ?, ?, ?, ?)';
 
