@@ -6,9 +6,7 @@ const cors = require('cors');
 const fs = require('fs');
 
 const app = express();
-app.use(cors({
-    origin: 'https://neonicc.github.io'
-}));
+app.use(cors());
 app.use(bodyParser.json());
 
 const db = mysql.createConnection ({
