@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/NeoNicc/HomeBudgetApp/issues"
   },
-  "homepage": "https://github.com/NeoNicc/HomeBudgetApp#readme"
+  "homepage": "https://github.com/NeoNicc/HomeBudgetApp#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3"
+  }
 }
