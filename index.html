@@ -10,6 +10,50 @@
     <script src="scripty.js" defer></script>
 </head>
 <body>
-    
+    <header>
+        <h1><strong>Home Budget App</strong></h1>
+        <div id="totalContainer">
+            <h2>Total Spent This Month: </h2>
+            <h2 id="monthlyTotal">0</h2>
+        </div>
+        <nav>
+            <button id="homeButton">Home</button>
+            <button id="receiptEntryButton">Add Receipt</button>
+        </nav>
+    </header>
+    <div id="homeDisplayContainer">
+        <aside id="filtersBar">
+            <button id="groceryButton">Groceries</button>
+            <button id="miscButton">Misc</button>
+            <button id="catButton">Cat</button>
+            <button id="bsButton">BS</button>
+            <button id="medicineButton">Medicine</button>
+        </aside>
+        <div id="tableDisplayContainer">
+            <h2 id="tableTitle">Budget for </h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Cost</th>
+                        <th>Category</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div id="addReceiptContainer">
+        <div id="receiptFormContainer">
+            
+        </div>
+        <div id="calculatorContainer">
+
+        </div>
+        <div id="budgetStatsContainer">
+
+        </div>
+    </div>
 </body>
 </html>
