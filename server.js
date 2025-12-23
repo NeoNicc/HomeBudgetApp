@@ -9,16 +9,23 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// Read CA file safely so the server doesn't crash if the file is missing.
+let sslOption;
+try {
+    const ca = fs.readFileSync('./ca.pem');
+    sslOption = { rejectUnauthorized: true, ca };
+} catch (err) {
+    console.warn('ca.pem not found or unreadable — continuing without CA file:', err.message);
+    sslOption = undefined;
+}
+
 const db = mysql.createConnection ({
     host: process.env.DB_HOST,
     port: 24986,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    ssl: {
-        rejectUnauthorized: true,
-        ca: fs.readFileSync('./ca.pem')
-    }
+    ...(sslOption ? { ssl: sslOption } : {})
 });
 
 db.connect(err => {
@@ -52,11 +59,15 @@ app.get('/get-item', (req, res) => {
 
     db.query(sql, (err, results) => {
         if (err) {
-            console.error("error fetching scores:", err);
+            console.error("error fetching receipt items:", err);
             return res.status(500).send(err);
         }
         res.json(results);
     });
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+// Health check route to confirm the server is reachable.
+app.get('/', (req, res) => res.send('Server is up'));
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
