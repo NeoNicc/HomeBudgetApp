@@ -52,11 +52,10 @@ nav button {
 #filtersBar {
     display: flex;
     gap: 20px;
-    justify-content: center;
+    justify-content: space-around;
 }
 #filtersBar button {
     padding: 5px;
-    font-size: 1.1rem;
     font-weight: bold;
 }
 table {
