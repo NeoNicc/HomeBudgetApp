@@ -1,6 +1,6 @@
 function loadBudget() {
     console.log("loaded");
-    fetch('https://sudokuaf.onrender.com/get-item')
+    fetch('https://homebudgetapp-5bj9.onrender.com/get-item')
     .then(response => response.json())
     .then(data => {
         const tableBody = document.getElementById('tableBody');
