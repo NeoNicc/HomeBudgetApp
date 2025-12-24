@@ -1,0 +1,92 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    gap: 2%;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 90%;
+}
+
+header {
+    display: flex;
+    border: solid 2px black;
+    margin: 5px;
+    background-color: rgba(210, 180, 140, 0.263);
+    border-radius: 8px;
+    justify-content: space-between;
+}
+#headerBlock1 {
+    flex-basis: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+nav {
+    display: flex;
+    justify-content: center;
+}
+nav button {
+    border: none;
+    padding: 5px;
+    margin: 2px 4px;
+    border-radius: 8px;
+    background: none;
+    font-weight: bold;
+    color: seagreen;
+}
+#monthlyTotalContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#monthlyTotal {
+    font-size: 2rem;
+    margin: 4px 20px;
+}
+
+#filtersBar {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+#filtersBar button {
+    padding: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+table {
+    justify-self: center;
+}
+caption {
+    font-size: 2rem;
+}
+
+#groceryTotalContainer {
+    display: flex;
+    justify-content: space-around;
+}
+#miscTotalContainer {
+    display: flex;
+    justify-content: space-around;
+}
+#catTotalContainer {
+    display: flex;
+    justify-content: space-around;
+}
+#medicineTotalContainer {
+    display: flex;
+    justify-content: space-around;
+}
+.bubbleTable {
+    border: solid 2px black;
+    margin: 5px;
+    border-radius: 8px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}

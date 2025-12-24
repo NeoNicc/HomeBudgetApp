@@ -12,37 +12,96 @@
 <body>
     <header>
         <h1><strong>Home Budget App</strong></h1>
-        <div id="totalContainer">
-            <h2>Total Spent This Month: </h2>
-            <h2 id="monthlyTotal">0</h2>
+        <div id="headerBlock1">
+            <div id="monthlyTotalContainer">
+                <h2>Month: </h2>
+                <h2 id="monthlyTotal">2000</h2>
+            </div>
+            <nav>
+                <button id="homeButton">Home</button>
+                <button id="receiptEntryButton">Add Receipt</button>
+            </nav>
         </div>
-        <nav>
-            <button id="homeButton">Home</button>
-            <button id="receiptEntryButton">Add Receipt</button>
-        </nav>
+        
     </header>
     <div id="homeDisplayContainer">
         <aside id="filtersBar">
             <button id="groceryButton">Groceries</button>
             <button id="miscButton">Misc</button>
             <button id="catButton">Cat</button>
-            <button id="bsButton">BS</button>
             <button id="medicineButton">Medicine</button>
         </aside>
-        <div id="tableDisplayContainer">
-            <h2 id="tableTitle">Budget for </h2>
+        <div id="groceryTable" class="bubbleTable">
             <table>
+                <caption id="groceryCaption">Grocery</caption>
                 <thead>
                     <tr>
                         <th>Description</th>
                         <th>Cost</th>
-                        <th>Category</th>
                         <th>Location</th>
                         <th>Date</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody"></tbody>
+                <tbody id="groceryTableBody"></tbody>
             </table>
+            <div id="groceryTotalContainer">
+                <h2>Total: </h2>
+                <h2 id="groceryTotal">0</h2>
+            </div>
+        </div>
+        <div id="miscTable" class="bubbleTable">
+            <table>
+                <caption id="miscCaption">Misc</caption>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Cost</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="miscTableBody"></tbody>
+            </table>
+            <div id="miscTotalContainer">
+                <h2>Total: </h2>
+                <h2 id="miscTotal">0</h2>
+            </div>
+        </div>
+        <div id="catTable" class="bubbleTable">
+            <table>
+                <caption id="catCaption">Cats</caption>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Cost</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="catTableBody"></tbody>
+            </table>
+            <div id="catTotalContainer">
+                <h2>Total: </h2>
+                <h2 id="catTotal">0</h2>
+            </div>
+        </div>
+        <div id="medicineTable" class="bubbleTable">
+            <table>
+                <caption id="medicineCaption">Medicine</caption>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Cost</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="medicineTableBody"></tbody>
+            </table>
+            <div id="medicineTotalContainer">
+                <h2>Total: </h2>
+                <h2 id="medicineTotal">0</h2>
+            </div>
         </div>
     </div>
     <div id="addReceiptContainer">
