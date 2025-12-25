@@ -72,6 +72,15 @@ nav button {
     border-radius: 4px;
 }
 
+/*totalview bubble*/
+#totalViewBubble {
+    display: flex;
+    flex-direction: row;
+}
+#totalViewHeader.table-header {
+    padding: 0;
+}
+
 /* table -> card styles: use div containers instead of table */
 .bubbleTable {
     display: flex;
@@ -123,6 +132,8 @@ nav button {
 #groceryTotalContainer {
     display: flex;
     justify-content: space-around;
+    border-top: solid 2px black;
+    width: 60%;
 }
 h2 {
     margin: 0 0 0 10px;
@@ -130,14 +141,20 @@ h2 {
 #miscTotalContainer {
     display: flex;
     justify-content: space-around;
+    border-top: solid 2px black;
+    width: 60%;
 }
 #catTotalContainer {
     display: flex;
     justify-content: space-around;
+    border-top: solid 2px black;
+    width: 60%;
 }
 #medicineTotalContainer {
     display: flex;
     justify-content: space-around;
+    border-top: solid 2px black;
+    width: 60%;
 }
 .bubbleTable {
     border: solid 2px black;

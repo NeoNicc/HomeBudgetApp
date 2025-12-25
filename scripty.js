@@ -13,9 +13,16 @@ const medicineTable = document.getElementById('medicineTable');
 const month = document.getElementById('month');
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const detailedViewButton = document.getElementById('detailedViewButton');
+const totalViewTotal = document.getElementById('totalViewTotal');
 
 month.textContent = months[new Date().getMonth()] + ':';
 const monthlyTotal = document.getElementById('monthlyTotal');
+
+let gTotal = 0;
+let mTotal = 0;
+let cTotal = 0;
+let medTotal = 0;
+let viewTotal = 0;
 
 //the fetch function that populates the board
 function loadBudget() {
@@ -25,21 +32,20 @@ function loadBudget() {
     .then(data => {
         const groceryTableBody = document.getElementById('groceryTableBody');
         groceryTableBody.innerHTML = '';
-        let gTotal = 0;
+        
         const groceryTotal = document.getElementById('groceryTotal');
         const miscTableBody = document.getElementById('miscTableBody');
         miscTableBody.innerHTML = '';
-        let mTotal = 0;
+        
         const miscTotal = document.getElementById('miscTotal');
         const catTableBody = document.getElementById('catTableBody');
         catTableBody.innerHTML = '';
-        let cTotal = 0;
+        
         const catTotal = document.getElementById('catTotal');
         const medicineTableBody = document.getElementById('medicineTableBody');
         medicineTableBody.innerHTML = '';
-        let medTotal = 0;
+        
         const medicineTotal = document.getElementById('medicineTotal');
-        let viewTotal = 0;
 
         data.forEach(row => {
             const category = (row.CATEGORY || '').toString().trim().toLowerCase();
@@ -76,15 +82,9 @@ function loadBudget() {
                 medicineTotal.innerText = `$${medTotal}`;
             }
 
-            // recalc viewTotal as the sum of visible category totals
-            viewTotal = 0;
-            if (window.getComputedStyle(groceryTable).display !== 'none') viewTotal += gTotal;
-            if (window.getComputedStyle(miscTable).display !== 'none') viewTotal += mTotal;
-            if (window.getComputedStyle(catTable).display !== 'none') viewTotal += cTotal;
-            if (window.getComputedStyle(medicineTable).display !== 'none') viewTotal += medTotal;
-
             // update header monthly total
             monthlyTotal.textContent = '$' + (gTotal + mTotal + cTotal + medTotal);
+            calculateViewTotal();
         });
     })
     .catch(error => console.error('Error:', error));
@@ -104,8 +104,9 @@ groceryButton.onclick = () => {
     if (gToggle == false) {
         groceryTable.style.display = 'none';
     } else {
-        groceryTable.style.display = 'block';
+        groceryTable.style.display = 'flex';
     }
+    calculateViewTotal();
 }
 let mToggle = true;
 miscButton.onclick = () => {
@@ -117,8 +118,9 @@ miscButton.onclick = () => {
     if (mToggle == false) {
         miscTable.style.display = 'none';
     } else {
-        miscTable.style.display = 'block';
+        miscTable.style.display = 'flex';
     }
+    calculateViewTotal();
 }
 let cToggle = true;
 catButton.onclick = () => {
@@ -130,8 +132,9 @@ catButton.onclick = () => {
     if (cToggle == false) {
         catTable.style.display = 'none';
     } else {
-        catTable.style.display = 'block';
+        catTable.style.display = 'flex';
     }
+    calculateViewTotal();
 }
 let medToggle = true;
 medicineButton.onclick = () => {
@@ -143,8 +146,9 @@ medicineButton.onclick = () => {
     if (medToggle == false) {
         medicineTable.style.display = 'none';
     } else {
-        medicineTable.style.display = 'block';
+        medicineTable.style.display = 'flex';
     }
+    calculateViewTotal();
 }
 let detailToggle = true;
 detailedViewButton.onclick = () => {
@@ -168,4 +172,15 @@ homeButton.onclick = () => {
 //determine display style
 function isVis(elem) {
     return window.getComputedStyle(elem).display;
+}
+
+//calculate the view total
+function calculateViewTotal() {
+    // recalc viewTotal as the sum of visible category totals
+    viewTotal = 0;
+    if (window.getComputedStyle(groceryTable).display !== 'none') viewTotal += gTotal;
+    if (window.getComputedStyle(miscTable).display !== 'none') viewTotal += mTotal;
+    if (window.getComputedStyle(catTable).display !== 'none') viewTotal += cTotal;
+    if (window.getComputedStyle(medicineTable).display !== 'none') viewTotal += medTotal;
+    totalViewTotal.textContent = '$' + viewTotal;
 }
