@@ -12,9 +12,10 @@ const medicineButton = document.getElementById('medicineButton');
 const medicineTable = document.getElementById('medicineTable');
 const month = document.getElementById('month');
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
+const detailedViewButton = document.getElementById('detailedViewButton');
 
 month.textContent = months[new Date().getMonth()] + ':';
+const monthlyTotal = document.getElementById('monthlyTotal');
 
 //the fetch function that populates the board
 function loadBudget() {
@@ -41,74 +42,49 @@ function loadBudget() {
         let viewTotal = 0;
 
         data.forEach(row => {
-            const tr = document.createElement('tr');
-            tr.classList.add('topRow');
-            const tr2 = document.createElement('tr');
-            tr2.classList.add('descRow');
-            //add each category table here
-            if (row.CATEGORY == 'Groceries') {
-                tr.innerHTML = `
-                <td>${row.LOCATION}</td>
-                <td>$${row.COST}</td>
-                <td>${row.RECEIPT_DATE.slice(5, 10)}</td>
-            `
-                tr2.innerHTML = `
-                    <td colspan="3" class="description"><strong>Description: </strong>${row.DESCRIPTION}</td>
-                `;
-                groceryTableBody.appendChild(tr);
-                groceryTableBody.appendChild(tr2);
-                gTotal += row.COST;
+            const category = (row.CATEGORY || '').toString().trim().toLowerCase();
+            const cost = Number(row.COST) || 0;
+            const dateShort = (row.RECEIPT_DATE || '').slice(5, 10);
+
+            // create a div-based item: main row + description row
+            const item = document.createElement('div');
+            item.classList.add('item');
+            item.innerHTML = `
+                <div class="mainRow">
+                    <div class="location">${row.LOCATION || ''}</div>
+                    <div class="cost">${cost ? `$${cost}` : ''}</div>
+                    <div class="date">${dateShort}</div>
+                </div>
+                <div class="descRow"><strong>Description:</strong> ${row.DESCRIPTION || ''}</div>
+            `;
+
+            if (category === 'groceries') {
+                groceryTableBody.appendChild(item);
+                gTotal += cost;
                 groceryTotal.innerText = `$${gTotal}`;
-            } else if (row.CATEGORY == 'Misc') {
-                tr.innerHTML = `
-                <td>${row.COST}</td>
-                <td>${row.LOCATION}</td>
-                <td>${row.RECEIPT_DATE.slice(5, 10)}</td>
-            `
-                tr2.innerHTML = `
-                    <strong>Description</strong>
-                    <td colspan="3" class="description">${row.DESCRIPTION}</td>
-            `;
-                miscTableBody.appendChild(tr);
-                miscTableBody.appendChild(tr2);
-                mTotal += row.COST;
+            } else if (category === 'misc') {
+                miscTableBody.appendChild(item);
+                mTotal += cost;
                 miscTotal.innerText = `$${mTotal}`;
-            } else if (row.CATEGORY == 'Cat') {
-                tr.innerHTML = `
-                <td>${row.DESCRIPTION}</td>
-                <td>${row.COST}</td>
-                <td>${row.LOCATION}</td>
-                <td>${row.RECEIPT_DATE.slice(5, 10)}</td>
-            `;
-                catTableBody.appendChild(tr);
-                cTotal += row.COST;
-                miscTotal.innerText = `$${cTotal}`;
-            } else if (row.CATEGORY == 'Medicine') {
-                tr.innerHTML = `
-                <td>${row.DESCRIPTION}</td>
-                <td>${row.COST}</td>
-                <td>${row.LOCATION}</td>
-                <td>${row.RECEIPT_DATE.slice(5, 10)}</td>
-            `;
-                medicineTableBody.appendChild(tr);
-                medTotal += row.COST;
-                miscTotal.innerText = `$${medTotal}`;
+            } else if (category === 'cat') {
+                catTableBody.appendChild(item);
+                cTotal += cost;
+                catTotal.innerText = `$${cTotal}`;
+            } else if (category === 'medicine') {
+                medicineTableBody.appendChild(item);
+                medTotal += cost;
+                medicineTotal.innerText = `$${medTotal}`;
             }
 
-            //calculate the the viewBubble total
-            if (window.getComputedStyle(groceryTable).display != 'none') {
-                viewTotal += gTotal;
-            } else if (isVis(miscTable) != 'none') {
-                viewTotal += mTotal;
-            } else if (isVis(catTable) != 'none') {
-                viewTotal += cTotal;
-            } else if (isVis(medicineTable) != 'none') {
-                viewTotal += medTotal;
-            }
-            //viewBubbleTotal.textContent = viewTotal;
+            // recalc viewTotal as the sum of visible category totals
+            viewTotal = 0;
+            if (window.getComputedStyle(groceryTable).display !== 'none') viewTotal += gTotal;
+            if (window.getComputedStyle(miscTable).display !== 'none') viewTotal += mTotal;
+            if (window.getComputedStyle(catTable).display !== 'none') viewTotal += cTotal;
+            if (window.getComputedStyle(medicineTable).display !== 'none') viewTotal += medTotal;
 
-            //calculate the header monthly total
-            monthlyTotal.textContent = '$'+(medTotal+cTotal+mTotal+gTotal);
+            // update header monthly total
+            monthlyTotal.textContent = '$' + (gTotal + mTotal + cTotal + medTotal);
         });
     })
     .catch(error => console.error('Error:', error));
@@ -169,6 +145,14 @@ medicineButton.onclick = () => {
     } else {
         medicineTable.style.display = 'block';
     }
+}
+let detailToggle = true;
+detailedViewButton.onclick = () => {
+    detailToggle = !detailToggle;
+    const descriptions = document.querySelectorAll('.descRow');
+    descriptions.forEach(desc => {
+        desc.style.display = detailToggle ? 'block' : 'none';
+    });
 }
 
 //these are the nav button event handlers

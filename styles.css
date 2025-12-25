@@ -1,3 +1,8 @@
+:root {
+    --bubbleBG: rgba(135, 179, 135, 0.279);
+    --buttonColor: rgba(179, 112, 67, 0.653);
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -19,6 +24,10 @@ header {
     background-color: rgba(210, 180, 140, 0.263);
     border-radius: 8px;
     justify-content: space-between;
+    align-items: baseline;
+}
+header h1 {
+    padding: 0.4rem;
 }
 #headerBlock1 {
     flex-basis: 40%;
@@ -52,43 +61,71 @@ nav button {
 /*filter Button styles*/
 #filtersBar {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     justify-content: space-around;
 }
 #filtersBar button {
     padding: 5px;
     font-weight: bold;
-}
-
-/*table styles*/
-.bubbleTable table {
-    justify-self: center;
-    width: 100%;
-    border-collapse: separate;
-    background: transparent;
-}
-caption {
-    font-size: 2rem;
-    border: solid 6px black;
-}
-th {
-    border: solid 4px black;
+    background-color: var(--buttonColor);
     border-radius: 4px;
 }
-.topRow td {
-    border: solid 2px black;
-    border-radius: 4px 4px 0 0;
-    padding: 0.5rem 0.75rem;
-    font-weight: bold;
+
+/* table -> card styles: use div containers instead of table */
+.bubbleTable {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
-.description {
-    border: solid 2px black;
-    border-top-style: none;
-    border-radius: 0 0 4px 4px;
+.bubbleTable .table-header {
+    padding: 0.5rem 0.75rem;
+}
+.bubbleTable .table-header h3 {
+    font-size: 1.6rem;
+    margin: 0;
+}
+.bubbleTable .items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem; /* space between item cards */
+    padding: 0.5rem;
+    width: 100%;
+}
+.bubbleTable .item {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.bubbleTable .item .mainRow {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem 0.75rem;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 700;
+}
+.bubbleTable .item .mainRow .location { width: 50%; text-align: left; }
+.bubbleTable .item .mainRow .cost { width: 25%; text-align: left; }
+.bubbleTable .item .mainRow .date { width: 25%; text-align: right; }
+.bubbleTable .item .descRow {
+    padding: 0.4rem 0.75rem;
+    background: rgba(182, 204, 187, 0.25);
+    border-top: 1px solid #ddd;
+    font-style: italic;
+}
+.caption-like {
+    font-size: 2rem;
 }
 #groceryTotalContainer {
     display: flex;
     justify-content: space-around;
+}
+h2 {
+    margin: 0 0 0 10px;
 }
 #miscTotalContainer {
     display: flex;
@@ -109,4 +146,5 @@ th {
     text-align: center;
     justify-content: center;
     align-items: center;
+    background-color: var(--bubbleBG);
 }
