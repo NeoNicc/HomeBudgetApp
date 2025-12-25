@@ -6,12 +6,12 @@
 
 body {
     display: grid;
-    gap: 2%;
     justify-content: center;
     align-items: center;
     grid-template-columns: 90%;
 }
 
+/*top bubble or header styles*/
 header {
     display: flex;
     border: solid 2px black;
@@ -41,14 +41,15 @@ nav button {
 }
 #monthlyTotalContainer {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-around;
     align-items: center;
 }
 #monthlyTotal {
-    font-size: 2rem;
-    margin: 4px 20px;
+    font-size: 1.8rem;
 }
 
+/*filter Button styles*/
 #filtersBar {
     display: flex;
     gap: 20px;
@@ -58,13 +59,33 @@ nav button {
     padding: 5px;
     font-weight: bold;
 }
-table {
+
+/*table styles*/
+.bubbleTable table {
     justify-self: center;
+    width: 100%;
+    border-collapse: separate;
+    background: transparent;
 }
 caption {
     font-size: 2rem;
+    border: solid 6px black;
 }
-
+th {
+    border: solid 4px black;
+    border-radius: 4px;
+}
+.topRow td {
+    border: solid 2px black;
+    border-radius: 4px 4px 0 0;
+    padding: 0.5rem 0.75rem;
+    font-weight: bold;
+}
+.description {
+    border: solid 2px black;
+    border-top-style: none;
+    border-radius: 0 0 4px 4px;
+}
 #groceryTotalContainer {
     display: flex;
     justify-content: space-around;

@@ -10,7 +10,13 @@ const catButton = document.getElementById('catButton');
 const catTable = document.getElementById('catTable');
 const medicineButton = document.getElementById('medicineButton');
 const medicineTable = document.getElementById('medicineTable');
+const month = document.getElementById('month');
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
+
+month.textContent = months[new Date().getMonth()] + ':';
+
+//the fetch function that populates the board
 function loadBudget() {
     console.log("loaded");
     fetch('https://homebudgetapp-5bj9.onrender.com/get-item')
@@ -32,28 +38,39 @@ function loadBudget() {
         medicineTableBody.innerHTML = '';
         let medTotal = 0;
         const medicineTotal = document.getElementById('medicineTotal');
+        let viewTotal = 0;
 
         data.forEach(row => {
             const tr = document.createElement('tr');
+            tr.classList.add('topRow');
+            const tr2 = document.createElement('tr');
+            tr2.classList.add('descRow');
             //add each category table here
             if (row.CATEGORY == 'Groceries') {
                 tr.innerHTML = `
-                <td>${row.DESCRIPTION}</td>
-                <td>${row.COST}</td>
                 <td>${row.LOCATION}</td>
+                <td>$${row.COST}</td>
                 <td>${row.RECEIPT_DATE.slice(5, 10)}</td>
-            `;
+            `
+                tr2.innerHTML = `
+                    <td colspan="3" class="description"><strong>Description: </strong>${row.DESCRIPTION}</td>
+                `;
                 groceryTableBody.appendChild(tr);
+                groceryTableBody.appendChild(tr2);
                 gTotal += row.COST;
                 groceryTotal.innerText = `$${gTotal}`;
             } else if (row.CATEGORY == 'Misc') {
                 tr.innerHTML = `
-                <td>${row.DESCRIPTION}</td>
                 <td>${row.COST}</td>
                 <td>${row.LOCATION}</td>
                 <td>${row.RECEIPT_DATE.slice(5, 10)}</td>
+            `
+                tr2.innerHTML = `
+                    <strong>Description</strong>
+                    <td colspan="3" class="description">${row.DESCRIPTION}</td>
             `;
                 miscTableBody.appendChild(tr);
+                miscTableBody.appendChild(tr2);
                 mTotal += row.COST;
                 miscTotal.innerText = `$${mTotal}`;
             } else if (row.CATEGORY == 'Cat') {
@@ -77,11 +94,30 @@ function loadBudget() {
                 medTotal += row.COST;
                 miscTotal.innerText = `$${medTotal}`;
             }
+
+            //calculate the the viewBubble total
+            if (window.getComputedStyle(groceryTable).display != 'none') {
+                viewTotal += gTotal;
+            } else if (isVis(miscTable) != 'none') {
+                viewTotal += mTotal;
+            } else if (isVis(catTable) != 'none') {
+                viewTotal += cTotal;
+            } else if (isVis(medicineTable) != 'none') {
+                viewTotal += medTotal;
+            }
+            //viewBubbleTotal.textContent = viewTotal;
+
+            //calculate the header monthly total
+            monthlyTotal.textContent = '$'+(medTotal+cTotal+mTotal+gTotal);
         });
     })
     .catch(error => console.error('Error:', error));
 }
+
+//this is where im calling the fetch
 loadBudget();
+
+//these are the filter buttons event handlers
 let gToggle = true;
 groceryButton.onclick = () => {
     if (gToggle == true) {
@@ -135,6 +171,7 @@ medicineButton.onclick = () => {
     }
 }
 
+//these are the nav button event handlers
 receiptEntryButton.onclick = () => {
     homeDisplayContainer.style.display = 'none';
     addReceiptContainer.style.display = 'grid';
@@ -142,4 +179,9 @@ receiptEntryButton.onclick = () => {
 homeButton.onclick = () => {
     homeDisplayContainer.style.display = 'grid';
     addReceiptContainer.style.display = 'none';
+}
+
+//determine display style
+function isVis(elem) {
+    return window.getComputedStyle(elem).display;
 }
